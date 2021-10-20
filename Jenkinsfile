@@ -86,7 +86,7 @@
 
         stage('Wait for ELB come up') {
             echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
-            sleep 300 // seconds
+            sleep 30
         }
 
         stage('Validate response') {
