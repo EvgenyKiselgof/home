@@ -86,8 +86,7 @@
 
         stage('Validate response') {
             steps {
-                sh '''mycluster=$(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
-                sh '''curl $mycluster'''
+                sh '''curl $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
             }
         }
 
