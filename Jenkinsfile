@@ -101,7 +101,7 @@
                 }
             }
             steps {
-                echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
+                echo 'Waiting for deployment to complete'
                 sleep 90
             }
         }
@@ -133,7 +133,7 @@
             }
         
         steps {
-                echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
+                echo 'Waiting to full deletion of deployment'
                 sleep 90
             }
         }   
