@@ -3,7 +3,7 @@
 
     parameters {
         string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
-        booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
+        booleanParam(name: 'autoApprove', defaultValue: true, description: 'Automatically run apply after generating plan?')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy Terraform build?')
         }
 
@@ -96,6 +96,26 @@
                 sh '''curl $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
             }
         }
+        stage('Delete NGINX') {
+            when {
+                equals expected: true, actual: params.destroy
+            }
+        
+        steps {
+           sh "kubectl delete service nginx-service"
+           sh "kubectl delete deployment nginx-deployment"
+           sh "kubectl delete configmap index-html-configmap"
+
+        stage('Wait for Removal') {
+            when {
+                equals expected: true, actual: params.destroy
+            }
+        
+        steps {
+                echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
+                sleep 90
+            }
+        }   
 
         stage('Destroy') {
             when {
