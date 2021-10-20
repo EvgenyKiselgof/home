@@ -17,8 +17,8 @@
     stages {
         stage('Get files from Git') {
             steps {
-                
-                    git https://github.com/EvgenyKiselgof/home.git
+
+                    git "https://github.com/EvgenyKiselgof/home.git"
 
                         }
                     }
