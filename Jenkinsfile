@@ -84,6 +84,11 @@
             }
         }
 
+        stage('Wait for ELB come up') {
+            echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
+            sleep 300 // seconds
+        }
+
         stage('Validate response') {
             steps {
                 sh '''curl -m 30 $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
