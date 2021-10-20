@@ -25,7 +25,9 @@
                         }
                     }
                 }
-            }        stage('Plan') {
+            }
+                    
+        stage('Plan') {
             when {
                 not {
                     equals expected: true, actual: params.destroy
