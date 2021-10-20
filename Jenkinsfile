@@ -87,7 +87,7 @@
         stage('Wait for ELB come up') {
             steps {
                 echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
-                sleep 60
+                sleep 90
             }
         }
 
