@@ -17,11 +17,9 @@
     stages {
         stage('Get files from Git') {
             steps {
-                sh '''
-                    git init
-                    git remote add origin https://github.com/EvgenyKiselgof/home.git
-                    git pull origin main
-                    '''
+                
+                    git https://github.com/EvgenyKiselgof/home.git
+
                         }
                     }
 
