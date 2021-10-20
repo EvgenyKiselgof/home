@@ -20,7 +20,7 @@
                 sh '''
                     git init
                     git remote add origin https://github.com/EvgenyKiselgof/home.git
-                    git pull origin master
+                    git pull origin main
                     '''
                         }
                     }
