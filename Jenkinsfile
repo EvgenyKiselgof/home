@@ -100,11 +100,12 @@
             when {
                 equals expected: true, actual: params.destroy
             }
-        
         steps {
            sh "kubectl delete service nginx-service"
            sh "kubectl delete deployment nginx-deployment"
            sh "kubectl delete configmap index-html-configmap"
+        }
+        }
 
         stage('Wait for Removal') {
             when {
