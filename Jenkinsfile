@@ -87,13 +87,13 @@
         stage('Wait for ELB come up') {
             steps {
                 echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
-                sleep 30
+                sleep 60
             }
         }
 
         stage('Validate response') {
             steps {
-                sh '''curl -m 30 $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
+                sh '''curl $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
             }
         }
 
