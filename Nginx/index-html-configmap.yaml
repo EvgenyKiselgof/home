@@ -6,7 +6,7 @@ metadata:
 data:
   index.html: |
     <html>
-    <h1>Welcome</h1>
+    <h1>Privet</h1>
     </br>
-    <h1>I’ve succeeded in the assignment</h1>
+    <h1>I have succeeded in the assignment</h1>
     </html

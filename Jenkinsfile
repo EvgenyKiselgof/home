@@ -16,7 +16,7 @@
         }
 
     stages {
-        stage('checkout') {
+        stage('Get files from Git') {
             steps {
                  script{
                         dir("terraform")
@@ -72,6 +72,27 @@
             }
         }
         
+        stage('Get kubeconfig') {  
+            steps {
+                sh "aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)"
+            }
+        }
+        
+        stage('Deploy NGINX') {  
+            steps {
+                sh "kubectl apply -f ./Nginx/index-html-configmap.yaml"
+                sh "kubectl apply -f ./Nginx/nginx.yaml"
+                sh "kubectl expose deployment nginx-deployment --type=LoadBalancer --name=nginx-service"
+            }
+        }
+
+        stage('Validate response') {
+            steps {
+                sh "mycluster=$(kubectl get services nginx-service | tail +2 |awk '{print$4}')"
+                sh "curl $mycluster"
+            }
+        }
+
         stage('Destroy') {
             when {
                 equals expected: true, actual: params.destroy
