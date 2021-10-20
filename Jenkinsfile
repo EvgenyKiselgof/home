@@ -4,7 +4,6 @@
         }
 
     parameters {
-        string(name: 'environment', defaultValue: 'terraform', description: 'Workspace/environment file to use for deployment')
         booleanParam(name: 'autoApprove', defaultValue: false, description: 'Automatically run apply after generating plan?')
         booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy Terraform build?')
         }
@@ -18,14 +17,9 @@
     stages {
         stage('Get files from Git') {
             steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/EvgenyKiselgof/home.git"
+                     git "https://github.com/EvgenyKiselgof/home.git"
                         }
                     }
-                }
-            }
 
         stage('Plan') {
             when {
