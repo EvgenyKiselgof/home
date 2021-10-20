@@ -86,7 +86,7 @@
 
         stage('Validate response') {
             steps {
-                sh '''curl $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
+                sh '''curl -m 30 $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
             }
         }
 
