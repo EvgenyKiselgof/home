@@ -71,12 +71,22 @@
         }
         
         stage('Get kubeconfig') {  
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             steps {
                 sh '''aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)'''
             }
         }
         
         stage('Deploy NGINX') {  
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             steps {
                 sh "kubectl apply -f ./Nginx/index-html-configmap.yaml"
                 sh "kubectl apply -f ./Nginx/nginx.yaml"
@@ -85,6 +95,11 @@
         }
 
         stage('Wait for ELB come up') {
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             steps {
                 echo 'Waiting 5 minutes for deployment to complete prior starting smoke testing'
                 sleep 90
@@ -92,6 +107,11 @@
         }
 
         stage('Validate response') {
+            when {
+                not {
+                    equals expected: true, actual: params.destroy
+                }
+            }
             steps {
                 sh '''curl $(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
             }
