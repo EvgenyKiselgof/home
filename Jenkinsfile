@@ -74,7 +74,7 @@
         
         stage('Get kubeconfig') {  
             steps {
-                sh "aws eks --region '$(terraform output -raw region)' update-kubeconfig --name '$(terraform output -raw cluster_name)'"
+                sh '''aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)'''
             }
         }
         
@@ -88,8 +88,8 @@
 
         stage('Validate response') {
             steps {
-                sh "mycluster=$(kubectl get services nginx-service | tail +2 |awk '{print$4}')"
-                sh "curl '$mycluster'"
+                sh '''mycluster=$(kubectl get services nginx-service | tail +2 |awk '{print$4}')'''
+                sh '''curl '$mycluster''''
             }
         }
 
